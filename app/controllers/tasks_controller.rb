@@ -1,30 +1,19 @@
 class TasksController < ApplicationController
-  before_action :require_user_logged_in
-  before_action :correct_user, only: [:destroy]  
+  before_action :require_user_logged_in, only: [:index, :show]
+  before_action :correct_user, only: [:destroy, :edit ,:update,:show]  
   def index
-    @tasks = Task.all
+    #@tasks = Task.all
+     @tasks = current_user.tasks.order(id: :desc)
   end
 
   def show
     @task = Task.find(params[:id])
+
   end
   def new
     @task = Task.new
   end
 
-#  def create
-#   @task = current_user.tasks.build(task_params)
-#   @task = Task.new(task_params)
-#   @tasks = current_user.tasks.order(id: :desc)
-#    if @task.save
-#      flash[:success] = 'Task が正常に投稿されました'
-#      
-#      render 'toppages/index'
-#    else
-#      flash.now[:danger] = 'Task が投稿されませんでした'
-#      render 'toppages/index'
-#    end
-#  end
   
   def create
 
@@ -42,7 +31,7 @@ class TasksController < ApplicationController
   
 
   def edit
-    @task = Task.find(params[:id])
+    @task = current_user.tasks.build
   end
   def update
     @task = Task.find(params[:id])

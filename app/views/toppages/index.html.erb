@@ -18,7 +18,7 @@
             <li class="media mb-3">
               <div class="media-body">
                 <div>
-                  <%= task.content %>
+                  <%= task.status %>：<%= link_to task.id, task %> : <%= task.content %>
                 </div>
               </div>
             </li>
